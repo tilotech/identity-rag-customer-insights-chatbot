@@ -30,7 +30,7 @@ ensuring answers are based on an accurate, deduplicated view of the customer.
 * <b>Deduplicate</b> - remove redundancies where repeated with no extra value.
 
 ## Live Demo
-If you dont want to use your own LLM keys then give it a try on the following live demo.
+If you don't want to use your own LLM keys then give it a try on the following live demo.
 
 | Live Demo |
 |--|
@@ -41,7 +41,6 @@ If you dont want to use your own LLM keys then give it a try on the following li
 1. Clone this repository
 2. Install dependencies: `pip install -r requirements.txt`
 3. Set up your environment variables (see Configuration section)
-3. Configure the demo variables:
 4. Run the demo server: `chainlit run chat.py -w`
 5. Open [http://localhost:8000](http://localhost:8000) in your browser
 6. Try asking "search for Sophie Muller"
@@ -80,11 +79,11 @@ console and in the correct region.
 To use your own data you will need to create a Tilores instance and get your free Tilores API credentials,
 Here's how to do that:
 * Visit [app.tilores.io](https://app.tilores.io) and sign up for free.
-* Click on "Switch to Instance View" on the bottom right.
-* Select "Upload Data File" option and proceed. It is recommended to use csv file format.
+* Click on "**_Switch to Instance View_**" on the bottom right.
+* Select "**_Upload Data File_**" option and proceed. It is recommended to use csv file format.
 * If the file has well named headers the matching will be automatically configured and you can proceed with the instance
   creation without any further changes. The deployment will take around 3-5 minutes.
-* Once the deployment is done, navigate to "Manage Instance" -> "Integration" -> "GraphQL API"
+* Once the deployment is done, navigate to "**_Manage Instance_**" -> "**_Integration_**" -> "**_GraphQL API_**"
 * The first URL is the `TILORES_GRAPHQL_API`, and the second is `TILORES_TOKEN_URL` you will need to export these two
   values as shown in Configuration section.
 * Then click `CREATE NEW CREDENTIALS` and store both values. Then export each one into its corresponding environment
