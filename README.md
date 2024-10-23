@@ -20,7 +20,9 @@ specific customers. It retrieves unified customer data across disparate sources
 to create a comprehensive golden record before generating LLM responses,
 ensuring answers are based on an accurate, deduplicated view of the customer.
 
-![IdentityRAG](/docs/assets/identityRAG.gif)
+| LangChain Integration                          |
+|------------------------------------------------|
+| ![IdentityRAG](/docs/assets/identityRAG.gif)   |
 
 ## Key Features
 * <b>Unify</b> - bring data together from various sources.
@@ -28,6 +30,10 @@ ensuring answers are based on an accurate, deduplicated view of the customer.
 * <b>Consolidate</b> - combine it meaningfully by creating a golden record.
 * <b>Disambiguate</b> - resolve conflicts/unclear matches.
 * <b>Deduplicate</b> - remove redundancies where repeated with no extra value.
+
+| Multiple Customer Data Sources  / Knowledge Bases |
+|---------------------------------------------------|
+| ![IdentityRAG](/docs/assets/multipleSources.gif)  |
 
 ## Live Demo
 If you don't want to use your own LLM keys then give it a try on the following live demo.
