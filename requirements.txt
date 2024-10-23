@@ -1,0 +1,10 @@
+langchain-tilores[all]>=0.1.0
+langgraph==0.2.22
+langchain_openai
+langchain_aws
+langchain-community
+langchain-unstructured
+chainlit
+unstructured
+pdfminer.six
+unstructured[pdf]
