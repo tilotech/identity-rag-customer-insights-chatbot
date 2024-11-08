@@ -19,7 +19,7 @@ from langchain.tools import Tool
 
 # Tilores
 from tilores import TiloresAPI
-from langchain_tilores import TiloresTools
+from tilores_langchain import TiloresTools
 
 # Chainlit
 import chainlit as cl
@@ -70,7 +70,7 @@ def start():
         if os.environ.get("OPENAI_MODEL_NAME"):
             model_name = os.environ.get("OPENAI_MODEL_NAME")
         llm = ChatOpenAI(temperature=0, streaming=True, model_name=model_name)
-    
+
     # Setup a connection to the Tilores instance and provide it as a tool
     tilores = TiloresAPI.from_environ()
     tilores_tools = TiloresTools(tilores)
@@ -130,7 +130,7 @@ def load_pdf_from_url(url: str):
     if response.status_code == 200:
         with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as temp_pdf:
             temp_pdf.write(response.content)
-        
+
         loader = UnstructuredPDFLoader(temp_pdf.name)
         documents = loader.load()
         return documents
