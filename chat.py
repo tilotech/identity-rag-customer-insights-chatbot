@@ -5,6 +5,7 @@ import tempfile
 import os
 
 # LangChain
+import langchain
 from langchain.tools import BaseTool
 from langchain_core.messages import AnyMessage, HumanMessage
 from langchain_openai import ChatOpenAI
@@ -23,6 +24,10 @@ from langchain_tilores import TiloresTools
 # Chainlit
 import chainlit as cl
 from chainlit.sync import run_sync
+
+# Plotly
+import plotly.graph_objects as go
+from plotly.io import from_json
 
 
 class HumanInputChainlit(BaseTool):
@@ -72,7 +77,9 @@ def start():
     tools = [
         HumanInputChainlit(),
         tilores_tools.search_tool(),
+        tilores_tools.edge_tool(),
         pdf_tool,
+        plotly_tool,
     ]
     # Use MemorySaver to use the full conversation
     memory = MemorySaver()
@@ -97,6 +104,12 @@ async def main(message: cl.Message):
     ui_message = cl.Message(content="")
     await ui_message.send()
     async for event in runnable.astream_events(state, version="v1", config={'configurable': {'thread_id': 'thread-1'}}):
+        if event["event"] == "on_tool_end":
+            if event["data"].get('output') and event["data"].get('output').artifact:
+                fig = from_json(event["data"].get("output").artifact)
+                chart = cl.Plotly(name="chart", figure=fig, display="inline")
+                ui_message.elements.append(chart)
+
         if event["event"] == "on_chat_model_stream":
             c = event["data"]["chunk"].content
             if c and len(c) > 0 and isinstance(c[0], dict) and c[0]["type"] == "text":
@@ -128,4 +141,17 @@ pdf_tool = Tool(
     name = "load_pdf",
     func=load_pdf_from_url,
     description="useful for when you need to download and process a PDF file from a given URL"
+)
+
+def render_plotly_graph(figureCode: str):
+    local_vars = {}
+    exec(figureCode, {"go": go}, local_vars)
+    fig = local_vars.get("fig")
+    return "generated a chart from the provided figure", fig.to_json()
+
+plotly_tool = Tool(
+    name = "plotly_tool",
+    func=render_plotly_graph,
+    description="useful for when you need to render a graph using plotly; the figureCode must only import plotly.graph_objects as go and must provide a local variable named fig as a result",
+    response_format='content_and_artifact'
 )
